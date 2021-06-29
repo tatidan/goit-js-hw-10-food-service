@@ -10,32 +10,53 @@ const Theme = {
   LIGHT: 'light-theme',
   DARK: 'dark-theme',
 };
+const { LIGHT, DARK } = Theme;
 
 const checkboxRef = document.querySelector('#theme-switch-toggle');
 checkboxRef.addEventListener('change', onThemeChange);
 uploadThemeSelected();
 
 function onThemeChange(event) {
+  let thema = LIGHT;
+  
   if (event.target.checked) {
-    document.body.classList.toggle(Theme.DARK);
-    localStorage.setItem('dark', true);
+    thema = DARK;
   }
-  else {
-    document.body.classList.remove(Theme.DARK);
-    localStorage.setItem('dark', false);
-  }
-}
+  document.body.classList = thema;
+  localStorage.setItem('dark', event.target.checked);
+};
 
-function uploadThemeSelected(event) {
-  const dataStorage = localStorage.getItem(('dark'));
+function uploadThemeSelected() {
+  const dataStorage = localStorage.getItem('dark');
+  const thema = JSON.parse(dataStorage) ? DARK : LIGHT;
+  document.body.classList.add(thema);
+  checkboxRef.checked = thema === DARK;
+};
 
-  if (dataStorage === 'true') {
-    document.body.classList.add(Theme.DARK);
-    checkboxRef.checked = true;
-  }
-  else {
-    document.body.classList.remove(Theme.DARK);
-    document.body.classList.add(Theme.LIGHT);
-    checkboxRef.checked = false;
-  }
-}
+/*==========MY FIRST TRY BEFORE OPTIMIZATION===========*/
+
+// function onThemeChange(event) {
+//   if (event.target.checked) {
+//     document.body.classList.toggle(Theme.DARK);
+//     localStorage.setItem('dark', true);
+//   }
+//   else {
+//     document.body.classList.remove(Theme.DARK);
+//     localStorage.setItem('dark', false);
+//   }
+// }
+
+// function uploadThemeSelected(event) {
+//   const dataStorage = localStorage.getItem(('dark'));
+
+//   if (dataStorage === 'true') {
+//     document.body.classList.add(Theme.DARK);
+//     checkboxRef.checked = true;
+//   }
+//   else {
+//     document.body.classList.remove(Theme.DARK);
+//     document.body.classList.add(Theme.LIGHT);
+//     checkboxRef.checked = false;
+//   }
+// }
+
